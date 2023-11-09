@@ -88,6 +88,9 @@ var upperCasedCharacters = [
   'Z'
 ];
 
+// array containing character arrays
+var chars = []
+
 // Object containing password criteria
 var crit = {
   passlength: 0,
@@ -111,6 +114,19 @@ function getPasswordOptions() {
     crit.numeric = confirm("would you like numeric characters?")
     crit.special = confirm("would you like special characters?")
   }
+  // adding only the character arrays chosen by user
+  if (crit.lowercase) {
+    chars.push(lowerCasedCharacters)
+  }
+  if (crit.uppercase) {
+    chars.push(upperCasedCharacters)
+  }
+  if (crit.special) {
+    chars.push(specialCharacters)
+  }
+  if (crit.numeric) {
+    chars.push(numericCharacters)
+  }
 }
 
 
@@ -123,7 +139,13 @@ function getRandom(arr) {
 
 // Function to generate password with user input
 function generatePassword() {
-
+  var pass = ""
+  getPasswordOptions()
+  for (var i = 0; i < crit.passlength; i++) {
+    // randomly chooses 1 char type of character types allowed, then randomly chooses a character of that type
+    pass += getRandom(getRandom(chars))
+  }
+  return pass
 }
 
 // Get references to the #generate element
